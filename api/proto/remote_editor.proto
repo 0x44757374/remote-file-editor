@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package remoteeditor;
+
+service RemoteEditorService {
+	rpc WatchFile (WatchFileRequest) returns (stream File){}
+	rpc WriteFile (WriteFileRequest) returns (WriteStatus){}
+}
+
+message WriteStatus {
+	string path = 1;
+	Status status = 2;
+}
+
+enum Status {
+	OK = 0;
+	OOPS = 1;
+}
+
+message WatchFileRequest {
+	string path = 1;
+}
+
+message WriteFileRequest {
+	string path = 1;
+	string content = 2;
+}
+
+message File {
+	string path = 1;
+	string content = 2;
+}
